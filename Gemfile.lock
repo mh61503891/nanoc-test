@@ -98,6 +98,8 @@ GEM
       nanoc-core (~> 4.11, >= 4.11.15)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    nokogumbo (2.0.2)
+      nokogiri (~> 1.8, >= 1.8.4)
     parallel (1.19.2)
     pastel (0.7.4)
       equatable (~> 0.6)
@@ -138,6 +140,7 @@ DEPENDENCIES
   adsf
   hashie
   nanoc
+  nokogumbo
   pry
   sqlite3
   srt
