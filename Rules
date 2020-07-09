@@ -1,0 +1,128 @@
+#!/usr/bin/env ruby
+
+# require 'yaml'
+
+# preprocess do
+#   CSV.read("content/categories.csv", headers: true).each do |row|
+#     entry = {
+#       id: row['key'],
+#       title: row['title'],
+#       description: row['description'],
+#     }
+#     content = YAML.dump(entry)
+#     # attributes = {
+#     #   type: :category,
+#     #   key: row['key'],
+#     #   title: row['title'],
+#     #   description: row['description'],
+#     #   contents: ['a', 'b']
+#     # }.compact
+#     attributes = {
+#       type: :category,
+#       website: {
+#         title: 'aa',
+#         subtitle: 'bb'
+#       }
+#     }
+#     identifier = "/#{row['key']}.yaml"
+#     @items.create(content, attributes, identifier)
+#   end
+# end
+
+# compile '/*.yaml' do
+#   if @item[:type] == :category
+#     filter :category
+#     layout '/default.html'
+#     write item.identifier.without_ext + '/index.html'
+#   end
+# end
+
+
+
+
+# compile '/categories.csv' do
+#   # filter :categories
+#   # pp @item
+#   # write '/index.html'
+#   # @item[:categories].each do |category|
+#   #   write "/#{category[:key]}.html"
+#   # end
+# end
+
+
+# compile '/index.html.erb' do
+#   layout '/default.*'
+#   filter :erb
+#   write '/index.html'
+# end
+
+# [1,2,3].each do |c|
+
+
+# end
+
+
+
+# compile '/**/*.csv' do
+#   filter :categories
+#   layout '/categories.html.erb'
+#   write '/index.html'
+
+# #  raise 'w'
+# #  write item.identifier.to_s
+
+#   # if item.identifier =~ '**/index.*'
+#   #   write item.identifier.to_s
+#   # else
+#   #   write item.identifier.without_ext + '/index.html'
+#   # end
+# end
+
+# compile '/**/*.html' do
+#   layout '/default.*'
+
+#   if item.identifier =~ '**/index.*'
+#     write item.identifier.to_s
+#   else
+#     write item.identifier.without_ext + '/index.html'
+#   end
+# end
+
+# This is an example rule that matches Markdown (.md) files, and filters them
+# using the :kramdown filter. It is commented out by default, because kramdown
+# is not bundled with Nanoc or Ruby.
+#
+#compile '/**/*.md' do
+#  filter :kramdown
+#  layout '/default.*'
+#
+#  if item.identifier =~ '**/index.*'
+#    write item.identifier.to_s
+#  else
+#    write item.identifier.without_ext + '/index.html'
+#  end
+#end
+
+ignore '/**/*.csv'
+ignore '/**/*.srt'
+
+compile '/**/*' do
+  case @item[:route_key]
+  when 'root'
+    layout '/root.*'
+    layout '/default.*'
+    write item.identifier.to_s
+  when 'category'
+    layout '/category.*'
+    layout '/default.*'
+    write item.identifier.to_s
+  when 'content'
+    layout '/content.*'
+    layout '/default.*'
+    write item.identifier.to_s
+  else
+    write item.identifier.to_s
+  end
+end
+
+layout '/**/*', :erb
